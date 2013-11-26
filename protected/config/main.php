@@ -44,6 +44,13 @@ return array(
 				'<controller:\w+>/<action:\w+>'=>'<controller>/<action>',
 			),
 		),
+		'authManager' => array(
+			'class' => 'CDbAuthManager',
+			'connectionID' => 'db',
+			'itemTable' => 'ts_auth_item',
+			'assignmentTable' => 'ts_auth_assignment',
+			'itemChildTable' => 'ts_auth_item_child',
+		),
 		/*
 		'db'=>array(
 			'connectionString' => 'sqlite:'.dirname(__FILE__).'/../data/testdrive.db',
