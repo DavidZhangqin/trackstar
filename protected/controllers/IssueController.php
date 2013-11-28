@@ -79,9 +79,24 @@ class IssueController extends Controller
 	 */
 	public function actionView($id)
 	{
+		$issue = $this->loadModel($id);
+		$comment = $this->createComment($issue);
 		$this->render('view',array(
-			'model'=>$this->loadModel($id),
+			'model'=>$issue,
+			'comment'=>$comment,
 		));
+	}
+
+	protected function createComment($issue) {
+		$comment = new Comment();
+		if(isset($_POST['Comment'])) {
+			$comment->attributes = $_POST['Comment'];
+			if($issue->addComment($comment)) {
+				Yii::app()->user->setFlash('commentSubmitted', "Your comment has been added.");
+				$this->refresh();
+			}
+		}
+		return $comment;
 	}
 
 	/**

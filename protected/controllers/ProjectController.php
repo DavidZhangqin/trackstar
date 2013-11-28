@@ -52,6 +52,10 @@ class ProjectController extends Controller
 	public function actionView()
 	{
 		$id = $_GET['id'];
+		Yii::app()->clientScript->registerLinkTag(
+			'alternate',
+			'application/rss+xml',
+			$this->createUrl('comment/feed', array('pid'=>$id)));
 		$issueDataProvider = new CActiveDataProvider('Issue', array(
 			'criteria' => array(
 				'condition' => 'project_id=:projectId',
@@ -81,8 +85,11 @@ class ProjectController extends Controller
 		if(isset($_POST['Project']))
 		{
 			$model->attributes=$_POST['Project'];
-			if($model->save())
+			if($model->save()) {
+				$model->associateUserToProject(Yii::app()->user);
+                $model->associateUserToRole('owner', Yii::app()->user->id);
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(
@@ -134,6 +141,10 @@ class ProjectController extends Controller
 	public function actionIndex()
 	{
 		$dataProvider=new CActiveDataProvider('Project');
+		Yii::app()->clientScript->registerLinkTag(
+			'alternate',
+			'application/rss+xml',
+			$this->createUrl('comment/feed'));
 		$this->render('index',array(
 			'dataProvider'=>$dataProvider,
 		));
