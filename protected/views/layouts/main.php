@@ -29,10 +29,12 @@
 	<div id="mainmenu">
 		<?php $this->widget('zii.widgets.CMenu',array(
 			'items'=>array(
-				array('label'=>'Projects', 'url'=>array('/project')),
+				array('label'=>'Projects', 'url'=>array('/project/index')),
 				array('label'=>'About', 'url'=>array('/site/page', 'view'=>'about')),
 				array('label'=>'Contact', 'url'=>array('/site/contact')),
-				array('label'=>'Admin', 'url'=>array('/user')),
+				array('label'=>'User', 'url'=>array('/user/index')),
+				array('label'=>'Admin', 'url'=>array('/admin/default/index'), 'visible'=>Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id)),
+				array('label'=>'System Messages', 'url'=>array('/admin/sysMessage/index'), 'visible'=>Yii::app()->authManager->checkAccess("admin", Yii::app()->user->id)),
 				array('label'=>'Login', 'url'=>array('/site/login'), 'visible'=>Yii::app()->user->isGuest),
 				array('label'=>'Logout ('.Yii::app()->user->name.')', 'url'=>array('/site/logout'), 'visible'=>!Yii::app()->user->isGuest)
 			),

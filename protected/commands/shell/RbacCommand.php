@@ -65,6 +65,14 @@ EOD;
             $role->addChild("updateProject");
             $role->addChild("deleteProject");
 
+            $this->_authManager->createTask("adminManagement", "access to the application administration functionality");
+            $role=$this->_authManager->createRole("admin");
+            $role->addChild("owner");
+            $role->addChild("reader");
+            $role->addChild("member");
+            $role->addChild("adminManagement");
+            $this->_authManager->assign("admin",7);
+
             echo "Authorization hierarchy successfully generated.";
         }
     }
