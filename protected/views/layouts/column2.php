@@ -18,9 +18,14 @@
 		$this->endWidget();
 	?>
 	<?php if(Yii::app()->controller->id == 'project' && (Yii::app()->controller->action->id == 'index' || Yii::app()->controller->action->id == 'view')): ?>
-	<?php $this->beginWidget('zii.widgets.CPortlet', array('title'=>'Recent Comments'));
-	    isset($_GET['id']) ? $this->widget('RecentComments', array('projectId'=>$_GET['id'])) : $this->widget('RecentComments');
-	    $this->endWidget();
+	<?php 
+		$key="TrackStar.ProjectListing.RecentComments";
+		if($this->beginCache($key, array('duration'=>120))) {
+			$this->beginWidget('zii.widgets.CPortlet', array('title'=>'Recent Comments'));
+		    isset($_GET['id']) ? $this->widget('RecentComments', array('projectId'=>$_GET['id'])) : $this->widget('RecentComments');
+		    $this->endWidget();
+		    $this->endCache();
+		}
 	?>
 	<?php endif; ?>
 	</div><!-- sidebar -->

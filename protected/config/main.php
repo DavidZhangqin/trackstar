@@ -80,15 +80,25 @@ return array(
 			'routes'=>array(
 				array(
 					'class'=>'CFileLogRoute',
-					'levels'=>'error, warning',
+					'levels'=>'error',
 				),
-				// uncomment the following to show log messages on web pages
-				/*
+				array(
+					'class'=>'CFileLogRoute',
+					'levels'=>'info, trace',
+					'logFile'=>'infoMessages.log',
+				),
 				array(
 					'class'=>'CWebLogRoute',
+					'levels'=>'warning',
 				),
-				*/
+				// uncomment the following to show log messages on web pages
+				// array(
+				// 	'class'=>'CWebLogRoute',
+				// ),
 			),
+		),
+		'cache'=>array(
+			'class'=>'system.caching.CFileCache',
 		),
 	),
 

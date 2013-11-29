@@ -16,6 +16,13 @@ class ProjectController extends Controller
 		return array(
 			'accessControl', // perform access control for CRUD operations
 			'postOnly + delete', // we only allow deletion via POST request
+			array(
+				//cache the entire output from the actionView() method for
+				//2 minutes
+				'COutputCache + view',
+				'duration'=>120,
+				'varyByParam'=>array('id'),
+			),
 		);
 	}
 
@@ -146,7 +153,7 @@ class ProjectController extends Controller
 			'application/rss+xml',
 			$this->createUrl('comment/feed'));
 
-		$sysMessage = SysMessage::model()->find(array('order'=>'t.update_time DESC'));
+		$sysMessage = SysMessage::getLatest();
 		$message = $sysMessage == null ? null : $sysMessage->message;
 
 		$this->render('index',array(
@@ -181,7 +188,7 @@ class ProjectController extends Controller
 	{
 		$model=Project::model()->findByPk($id);
 		if($model===null)
-			throw new CHttpException(404,'The requested page does not exist.');
+			throw new CException('The requested page does not exist.');
 		return $model;
 	}
 

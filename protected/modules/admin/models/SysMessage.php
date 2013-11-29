@@ -94,4 +94,22 @@ class SysMessage extends TrackStarActiveRecord
 			'criteria'=>$criteria,
 		));
 	}
+
+	public static function getLatest() {
+		if(($cache=Yii::app()->cache)!==null) {
+			$key='TrackStar.ProjectListing.SystemMessage';
+			if(($sysMessage=$cache->get($key))!==false) {
+				return $sysMessage;
+			}
+		}
+		$sysMessage = self::model()->find(array('order'=>'t.update_time DESC'));
+		if($sysMessage!= null) {
+			if(isset($key)) {
+				$cache->set($key,$sysMessage,0,new CDbCacheDependency('SELECT id FROM ts_sys_message ORDER BY update_time DESC'));
+			}
+			return $sysMessage;
+		} else {
+			return null;
+		}
+	}
 }
