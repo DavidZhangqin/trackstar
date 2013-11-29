@@ -81,7 +81,7 @@ class SiteController extends Controller
 	{
 		Yii::trace("The actionLogin() method is being requested", "application.controllers.SiteController");
 		if(!Yii::app()->user->isGuest) {
-			$this->redirect(Yii::app()->homeUrl);
+			$this->redirect(Yii::app()->homeUrl."project");
 		}
 		$model=new LoginForm;
 
@@ -114,7 +114,7 @@ class SiteController extends Controller
 	public function actionLogout()
 	{
 		Yii::app()->user->logout();
-		$this->redirect(Yii::app()->homeUrl);
+		$this->redirect(Yii::app()->homeUrl."project");
 	}
 
 	public function actionShowLog() {

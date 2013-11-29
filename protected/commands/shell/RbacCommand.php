@@ -73,6 +73,11 @@ EOD;
             $role->addChild("adminManagement");
             $this->_authManager->assign("admin",7);
 
+            $role = $this->_authManager->createRole("pro_role");
+            $role->addChild("owner");
+            $role->addChild("reader");
+            $role->addChild("member");
+
             echo "Authorization hierarchy successfully generated.";
         }
     }

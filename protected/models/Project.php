@@ -138,12 +138,27 @@ class Project extends TrackStarActiveRecord
 	}
 
 	public function isUserInRole($role) {
-		$sql = "SELECT role FROM {{project_user_role}} WHERE project_id=:projectId AND user_id=:userId AND role=:role";
+		$sql = "SELECT role FROM {{project_user_role}} WHERE project_id=:projectId AND user_id=:userId";
 		$command = Yii::app()->db->createCommand($sql);
 		$command->bindValue(":projectId", $this->id, PDO::PARAM_INT);
 		$command->bindValue(":userId", Yii::app()->user->getId(), PDO::PARAM_INT);
-		$command->bindValue(":role", $role, PDO::PARAM_STR);
+		// $command->bindValue(":role", $role, PDO::PARAM_STR);
 		$res = $command->queryRow();
-		return !empty($res) ? true : false;
+		if($res['role'] == $role) return true;
+		$userRole = $this->findChildRole($res['role']);
+		if(in_array($role, $userRole)) return true;
+		return false;
+		// return empty($res) ? false :true;
+	}
+	private function findChildRole($role) {
+		$sql = "SELECT child FROM {{auth_item_child}} WHERE parent=:parent";
+		$command = Yii::app()->db->createCommand($sql);
+		$command->bindValue(":parent", $role, PDO::PARAM_STR);
+		$res = $command->queryAll();
+		$roles = array();
+		foreach ($res as $child) {
+			$roles[] = $child['child'];
+		}
+		return $roles;
 	}
 }

@@ -70,8 +70,12 @@ class UserController extends Controller
 		if(isset($_POST['User']))
 		{
 			$model->attributes=$_POST['User'];
-			if($model->save())
+			if($model->save()) {
+				$auth = Yii::app()->authManager;
+                $bizRule = 'return isset($params["project"]) && $params["project"]->isUserInRole($params["role"]);';
+                $auth->assign("owner", $model->id, $bizRule);
 				$this->redirect(array('view','id'=>$model->id));
+			}
 		}
 
 		$this->render('create',array(

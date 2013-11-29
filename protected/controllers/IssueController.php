@@ -105,6 +105,9 @@ class IssueController extends Controller
 	 */
 	public function actionCreate()
 	{
+		if(!Yii::app()->user->checkAccess('createIssue',array('project'=>$this->_project, 'role'=>'member'))) {
+			throw new CHttpException(403, 'You are not authorized to perform this action.');
+		}
 		$model=new Issue;
 		$model->project_id = $this->_project->id;
 

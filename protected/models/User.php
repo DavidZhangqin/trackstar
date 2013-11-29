@@ -124,4 +124,7 @@ class User extends TrackStarActiveRecord
 	public function encrypt($value) {
 		return md5($value);
 	}
+	public function checkAccess() {
+		return "123";
+	}
 }
