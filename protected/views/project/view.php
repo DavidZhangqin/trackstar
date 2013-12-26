@@ -22,6 +22,7 @@ $this->menu=array(
 
 <?php $this->widget('zii.widgets.CDetailView', array(
 	'data'=>$model,
+	'htmlOptions'=>array('class'=>'table table-striped table-bordered table-hover'),
 	'attributes'=>array(
 		'id',
 		'name',

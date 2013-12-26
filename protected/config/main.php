@@ -9,7 +9,7 @@ return array(
 	'basePath'=>dirname(__FILE__).DIRECTORY_SEPARATOR.'..',
 	'name'=>'Track Star',
 	// 'homeUrl' => '/project',
-	// 'theme' => 'abound',
+	'theme' => 'abound',
 
 	// preloading 'log' component
 	'preload'=>array('log'),

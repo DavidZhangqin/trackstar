@@ -7,8 +7,8 @@ $this->breadcrumbs=array(
 );
 
 $this->menu=array(
-	array('label'=>'Create Project', 'url'=>array('create')),
-	array('label'=>'Manage Project', 'url'=>array('admin')),
+	array('label'=>'<i class="icon-plus-sign"></i> Create Project', 'url'=>array('create')),
+	array('label'=>'<i class="icon-edit"></i> Manage Project', 'url'=>array('admin')),
 );
 ?>
 
@@ -19,10 +19,13 @@ $this->menu=array(
 <?php
     Yii::app()->clientScript->registerScript('fadeAndHideEffect', '$(".sys-message").animate({opacity:1.0},5000).fadeOut("slow");');
 endif; ?>
-<h1>Projects</h1>
+<div class="page-header">
+    <h1>List Projects</h1>
+</div>
 
 <?php $this->widget('zii.widgets.CListView', array(
 	'dataProvider'=>$dataProvider,
+    'itemsCssClass'=>'',
 	'itemView'=>'_view',
 )); ?>
 
